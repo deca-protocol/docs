@@ -169,9 +169,85 @@
                         <h1 id="deca-docs"><a class="header" href="#deca-docs">DECA Docs</a></h1>
 <p>The DECA Project Documentation</p>
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>Hola Itzel
+como estas</p>
 <h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
-<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
-<h2 id="contribute"><a class="header" href="#contribute">Contribute</a></h2>
+<p>There are some requirements you need to fulfill to be able to work with DECA docs.</p>
+<ul>
+<li><code>Rust</code> &gt;= 1.66</li>
+<li><code>curl</code> &gt;= 7.88.1</li>
+<li><code>cargo</code> &gt;= 1.72.0</li>
+<li><code>mdBook</code> &gt;= v0.4.34</li>
+<li><code>git</code> &gt;= 2.39.2</li>
+</ul>
+<blockquote>
+<p>NOTE: These are the recommended versions since they were tested in the development environment.</p>
+</blockquote>
+<h2 id="installation"><a class="header" href="#installation">Installation.</a></h2>
+<p>The easiest way to get both Rust and Cargo's latest versions is by using the <code>rustup</code> script, which also means that you have to use the <code>Curl</code> command.</p>
+<h3 id="1-git-installation"><a class="header" href="#1-git-installation">1. Git Installation.</a></h3>
+<p>The first step is to install git on you Unix system. To do that,  you only need to run the following command:</p>
+<pre><code class="language-shell">$ sudo apt install git
+</code></pre>
+<h3 id="2-curl-installation"><a class="header" href="#2-curl-installation">2. Curl Installation.</a></h3>
+<p>You have to repeat the same proccess to install <code>curl</code>, use the apt command:</p>
+<pre><code class="language-sh"> $ sudo apt install curl
+</code></pre>
+<p>Once you have <code>Curl</code> installed you can go ahead and continue with the Rust and Cargo installations.</p>
+<h3 id="3-rust-and-cargo-installation"><a class="header" href="#3-rust-and-cargo-installation">3. Rust and Cargo Installation.</a></h3>
+<p>To install Rust and Cargo on your Unix System you have to download the <code>rustup installer script</code> using the following command on the terminal:</p>
+<pre><code class="language-shell">$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+</code></pre>
+<p>By using the previous command you will get the latest Rust and Cargo's versions. </p>
+<blockquote>
+<p>Suggestion: You can make sure the installation was succesfull by using the following command:</p>
+<pre><code class="language-sh">$ rustc --version
+</code></pre>
+<p>It tells you the version of Rust that was installed.</p>
+</blockquote>
+<blockquote>
+<p>NOTE: Some important considerations when installing Rust:</p>
+<ul>
+<li>
+<p>When you install Rust, it will be installed only for the current user, in other words, the installation is not system-wide.</p>
+</li>
+<li>
+<p>It is not required to be root or sudo to be able to install Rust.</p>
+</li>
+</ul>
+</blockquote>
+<p>Once you have completed your Rust and Cargo installations, you can now continue with the <code>mdBook</code> installation.</p>
+<h3 id="4-mdbook-installation"><a class="header" href="#4-mdbook-installation">4. MdBook Installation.</a></h3>
+<p>DECA Docs uses <code>mdBook</code> as a way to create books with Markdown. Since <code>mdBook</code> is a command line tool, it is ideal for creating tutorials, API documentations, course materials, amongst other useful things.</p>
+<p>You can follow the instructions bellow to download <code>mdBook</code>. </p>
+<p>First, you have to use the following command to build and install <code>mdBook</code>:</p>
+<pre><code class="language-shell">$ cargo install mdbook
+</code></pre>
+<p>The command will automatically download <code>mdBook</code>, build it and install it in Cargo's global binary directory.</p>
+<p>Once installed, the next step is to get the DECA Docs repository. Follow the instructions below to get it.</p>
+<h3 id="clone-the-deca-documentation-repository"><a class="header" href="#clone-the-deca-documentation-repository">Clone the DECA Documentation repository.</a></h3>
+<p>After you have succesfully compleated all installations, you can now access the docummentation repository and contribute to the resources. 
+Run the next command on the terminal:</p>
+<pre><code class="language-shell">$ git clone https://git.decentralizedscience.org/DECA/docs.git
+</code></pre>
+<blockquote>
+<ul>
+<li>This command lets you copy the DECA Docs repository to your local machine.</li>
+<li>It also means that you can pull down a full copy of all the repository data that it has at that point in time, including all versions of every file and folder for the project.</li>
+</ul>
+</blockquote>
+<p>Once the repository has been cloned, you can have access to it by entering the following command on your terminal:</p>
+<pre><code class="language-shell">$ cd docs/
+</code></pre>
+<p>This command will lead you to the directory where you can find the DECA Docs README.md.</p>
+<p>The last step is to run the server using the following command:</p>
+<pre><code class="language-shell">$ mdbook serve 
+</code></pre>
+<p>You can view the page on any browser using the following link <a href="http://127.0.0.1:3000">http://127.0.0.1:3000</a></p>
+<blockquote>
+<p>NOTE: If you want to access remotely use the <code>mdbook serve -n 0.0.0.0</code> which means any IP address can access the DECA Docs project.</p>
+</blockquote>
+<h2 id="contribute-usage"><a class="header" href="#contribute-usage">Contribute (Usage)</a></h2>
 <h2 id="contract"><a class="header" href="#contract">Contract</a></h2>
 <ul>
 <li><a href="https://t.me/deca_currency/1">Telegram</a></li>
@@ -187,6 +263,23 @@ A copy of the license is included in the section entitled &quot;GNU
 Free Documentation License&quot;. 
 </code></pre>
 <h2 id="references"><a class="header" href="#references">References</a></h2>
+<ol>
+<li>
+<p>Rust, &quot;Learn Rust&quot;, <a href="https://www.rust-lang.org/tools/install">https://www.rust-lang.org/tools/install</a>, 2023-08-31.</p>
+</li>
+<li>
+<p>A.Prakash, &quot;How to install Rust and Cargo&quot;, <a href="https://itsfoss.com/install-rust-cargo-ubuntu-linux/">https://itsfoss.com/install-rust-cargo-ubuntu-linux/</a>, 2023-03-26.</p>
+</li>
+<li>
+<p>The Cargo Book, &quot;Installation&quot;, <a href="https://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/getting-started/installation.html#build-and-install-cargo-from-source">https://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/getting-started/installation.html#build-and-install-cargo-from-source</a>, 2023-08-31.</p>
+</li>
+<li>
+<p>Docs GitHub, &quot;Cloning a repository&quot;, <a href="https://docs.github.com/es/repositories/creating-and-managing-repositories/cloning-a-repository">https://docs.github.com/es/repositories/creating-and-managing-repositories/cloning-a-repository</a>, 2023-08-31.</p>
+</li>
+<li>
+<p>mdBook Docummentation, &quot;Introduction&quot;, <a href="https://rust-lang.github.io/mdBook/#:~:text=mdBook%20is%20a%20command%20line,easily%20navigable%20and%20customizable%20presentation.&amp;text=This%20guide%20is%20an%20example%20of%20what%20mdBook%20produces.">https://rust-lang.github.io/mdBook/#:~:text=mdBook%20is%20a%20command%20line,easily%20navigable%20and%20customizable%20presentation.&amp;text=This%20guide%20is%20an%20example%20of%20what%20mdBook%20produces.</a>, 2023-08-31.</p>
+</li>
+</ol>
 
                     </main>
 
@@ -211,22 +304,6 @@ Free Documentation License&quot;.
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
