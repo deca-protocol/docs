@@ -47,7 +47,17 @@ First time config setup for a server:
    ```
 > This removes local discovery requests
 
-### Setup Circuit Relay V2
+### Enable Public Gateway
+Modify the GateWay section with the IP Address 0.0.0.0 :
+   ```sh
+    "Addresses": {
+    "API": "/ip4/127.0.0.1/tcp/5001",
+    "Announce": [],
+    "AppendAnnounce": [],
+    "Gateway": "/ip4/0.0.0.0/tcp/8080",
+   ```
+
+### Enable WebSocket on port 4004
 Add swarm address in the config (specifically the ws line):
    ```sh
        "Swarm": [
@@ -59,18 +69,42 @@ Add swarm address in the config (specifically the ws line):
        ]
    ```
 
+### Enable Circuit Relay V2
 Enable Swarm.RelayService with the following command:
    ```sh
       ipfs config --json Swarm.RelayService.Enabled true
    ```
-
 and
 
    ```sh
       ipfs config --json Swarm.RelayClient.Enabled true
    ```
 
-## Set IPFS as a daemon and Nginx Reverse Proxy
+### Enable Public Gateway
+To enable the public gateway setting your Gateway section should look as the 
+following:
+
+```sh
+  "Gateway": {
+    "APICommands": [],
+    "DeserializedResponses": null,
+    "HTTPHeaders": {},
+    "NoDNSLink": false,
+    "NoFetch": false,
+    "PathPrefixes": [],
+    "PublicGateways":{
+      "devteam": {
+        "UseSubdomains": false,
+        "Paths": [
+          "/ipfs",
+          "/ipns"
+        ]
+      }
+    },
+    "RootRedirect": ""
+  },
+```
+
 ### Set IPFS as a daemon
 
 Copy the following lines after the `sudo vim... command`, modify user and path to ipfs so that it matches with your system and user that runs ipfs: 
@@ -80,12 +114,16 @@ Copy the following lines after the `sudo vim... command`, modify user and path t
    
    [Unit]
    Description=IPFS Daemon
+   After=network.target
    
    [Service]
-   ExecStart=/usr/local/bin/ipfs daemon --enable-pubsub-experiment
+   Type=notify
+   ExecStart=/usr/local/bin/ipfs daemon --enable-gc=true --migrate=true
+   ExecStop=/usr/local/bin/ipfs shutdown
    User=nodemaster
-   Restart=always
+   Restart=on-failure
    LimitNOFILE=10240
+   KillSignal=SIGINT
    
    [Install]
    WantedBy=multi-user.target
@@ -103,7 +141,12 @@ Enable the service
    ```
    **NOTE: service must be set as active (running), if not please verify the preview steps**
 
+
+## Set IPFS as a daemon and Nginx Reverse Proxy
+
 ### Nginx Reverse Proxy for a public gateway and websocket 
+> NOTE: websocket is required for the Orbitdb which hold search.deca.eco
+> our carbon credits distributed database
 
 The Gateway setup:
 Change the server name for your own domain name:
@@ -113,7 +156,7 @@ Change the server name for your own domain name:
        server_name gateway.decentralizescience.org;
 
        location / {
-           proxy_pass http://localhost:4001;
+           proxy_pass http://localhost:8080;
            proxy_set_header Host $host;
            proxy_cache_bypass $http_upgrade;
            allow all;
@@ -146,7 +189,7 @@ The enabling Secure WebSocket with nginx:
 ### Verify Secure WebSocket connection
 Doing an IPFS ping
    ```sh
-   ipfs ping /dns4/ipfs.decentralizedscience.org/443/wss/p2p/12D3KooWQzickgUJ1N9dNZMJpNnFUCHmhndTVgexXnt6dQhPFcEE
+   ipfs ping /dns4/gateway.decentralizedscience.org/443/wss/p2p/12D3KooWQzickgUJ1N9dNZMJpNnFUCHmhndTVgexXnt6dQhPFcEE
 
    PING 12D3KooWQzickgUJ1N9dNZMJpNnFUCHmhndTVgexXnt6dQhPFcEE.
    Pong received: time=161.27 ms
@@ -155,18 +198,18 @@ Doing an IPFS ping
    ```
 Doing a swarm connect
    ```sh
-   ipfs swarm connect /dns4/ipfs.decentralizedscience.org/443/wss/p2p/12D3KooWQzickgUJ1N9dNZMJpNnFUCHmhndTVgexXnt6dQhPFcEE
+   ipfs swarm connect /dns4/gateway.decentralizedscience.org/443/wss/p2p/12D3KooWQzickgUJ1N9dNZMJpNnFUCHmhndTVgexXnt6dQhPFcEE
 
    connect 12D3KooWQzickgUJ1N9dNZMJpNnFUCHmhndTVgexXnt6dQhPFcEE success
    ```
 
 ### check the IPFS public Gateway:
 
-Browse by adding `/ipns/deca.eco/` to your gateway address:
+Browse by adding `/ipns/docs.deca.eco/` to your gateway address:
 > You should see the IPFS official web3 website
 
 Example:
-https://gateway.decentralizedscience.org/ipns/deca.eco/
+https://gateway.decentralizedscience.org/ipns/docs.deca.eco/
 
 ## License
 
@@ -186,9 +229,10 @@ https://gateway.decentralizedscience.org/ipns/deca.eco/
 ## References
 
 1. [Install IPFS Kubo](https://docs.ipfs.tech/install/command-line/#install-official-binary-distributions)
-2. [file transfer](https://github.com/ipfs/go-ipfs/blob/master/docs/file-transfer.md)
-3. [circuit relay](https://docs.libp2p.io/concepts/circuit-relay/)
-4. [understanding circuit relay](https://blog.aira.life/understanding-ipfs-circuit-relay-ccc7d2a39)
-5. [experimental features](https://github.com/ipfs/go-ipfs/blob/master/docs/experimental-features.md)
+2. [Hosting a public IPFS gateway](https://gist.github.com/NatoBoram/09d244ab02af16fecb62b917f7bee3c0)
+3. [file transfer](https://github.com/ipfs/go-ipfs/blob/master/docs/file-transfer.md)
+4. [circuit relay](https://docs.libp2p.io/concepts/circuit-relay/)
+5. [understanding circuit relay](https://blog.aira.life/understanding-ipfs-circuit-relay-ccc7d2a39)
+6. [experimental features](https://github.com/ipfs/go-ipfs/blob/master/docs/experimental-features.md)
 
 

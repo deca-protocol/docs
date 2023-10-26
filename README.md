@@ -112,6 +112,7 @@ You can view the page on any browser using the following link <http://127.0.0.1:
 > NOTE: If you want to access remotely use the `mdbook serve -n 0.0.0.0` which means any IP address can access the DECA Docs project.
 
 ## Contribute (Usage)
+>ToDo
 
  
 
@@ -119,6 +120,9 @@ You can view the page on any browser using the following link <http://127.0.0.1:
 
 * [Telegram](https://t.me/deca_currency/1)
 * [Matrix](https://matrix.to/#/#DECA:matrix.org)
+
+***Developers***
+- [itzelot01](mailto:itzeltellez59@aragon.unam.mx)
 
 ## License
 
